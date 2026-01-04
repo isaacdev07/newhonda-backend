@@ -25,9 +25,6 @@ public class VehicleService {
 		vehicle.setYear(vehicleDTO.getYear());
 		vehicle.setVehicleImage(vehicleDTO.getVehicleImage());
 		
-		
-		
-		
 		return vehicleRepository.save(vehicle);
 		
 		

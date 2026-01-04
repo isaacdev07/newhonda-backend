@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +21,12 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	//endpoint para criar um novo usuario
 	@PostMapping("/create")
-	public User createNewUser(@Valid @RequestBody UserDTO userDTO) {
-		return userService.createNewUser(userDTO);
+	public ResponseEntity<User> createNewUser(@Valid @RequestBody UserDTO userDTO) {
+	    User newUser = userService.createNewUser(userDTO);
+	    //retorna sucesso e o usuario criado
+	    return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
 	}
 
 }

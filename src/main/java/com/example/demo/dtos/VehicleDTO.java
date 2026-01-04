@@ -19,9 +19,10 @@ public class VehicleDTO {
 	private String kmsDriven;
 	private TypeVehicle typeVehicle;
 	private StateVehicle stateVehicle;
+	private String vehicleImage;
 	
 	
-	public VehicleDTO(Long id, String nameVehicle, int year, String kmsDriven, TypeVehicle typeVehicle,
+	public VehicleDTO(Long id, String nameVehicle, int year, String kmsDriven, String vehicleImage, TypeVehicle typeVehicle,
 			StateVehicle stateVehicle) {
 		this.id = id;
 		this.nameVehicle = nameVehicle;
@@ -29,6 +30,7 @@ public class VehicleDTO {
 		this.kmsDriven = kmsDriven;
 		this.typeVehicle = typeVehicle;
 		this.stateVehicle = stateVehicle;
+		this.vehicleImage = vehicleImage;
 	}
 
 
@@ -46,6 +48,15 @@ public class VehicleDTO {
 	}
 
 
+	public void setVehicleImage(String vehicleImage) {
+		this.vehicleImage = vehicleImage;
+	}
+
+
+	public String getVehicleImage() {
+		return vehicleImage;
+	}
+	
 	public String getNameVehicle() {
 		return nameVehicle;
 	}

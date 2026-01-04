@@ -23,9 +23,10 @@ public class Vehicle {
 	private String kmsDriven;
 	private TypeVehicle typeVehicle;
 	private StateVehicle stateVehicle;
+	private String vehicleImage;
 	
 	
-	public Vehicle(Long id, String nameVehicle, int year, String kmsDriven, TypeVehicle typeVehicle,
+	public Vehicle(Long id, String nameVehicle, int year, String kmsDriven, String vehicleImage, TypeVehicle typeVehicle,
 			StateVehicle stateVehicle) {
 		this.id = id;
 		this.nameVehicle = nameVehicle;
@@ -33,6 +34,7 @@ public class Vehicle {
 		this.kmsDriven = kmsDriven;
 		this.typeVehicle = typeVehicle;
 		this.stateVehicle = stateVehicle;
+		this.vehicleImage = vehicleImage;
 	}
 
 
@@ -44,9 +46,17 @@ public class Vehicle {
 		return id;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public void setVehicleImage(String vehicleImage) {
+		this.vehicleImage = vehicleImage;
+	}
+
+
+	public String getVehicleImage() {
+		return vehicleImage;
 	}
 
 

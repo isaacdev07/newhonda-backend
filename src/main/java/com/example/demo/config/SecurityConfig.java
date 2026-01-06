@@ -12,13 +12,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 	
-	//bean para deixar a rota de usuarios publica
+	//bean para deixar as rotas publicas
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/create", "/vehicle/create", "/hello-world").permitAll() 
+                        .requestMatchers("/user/create", "/user/login", "/vehicle/create", "/hello-world").permitAll() 
                         .anyRequest().authenticated() 
                 )
                 .build();

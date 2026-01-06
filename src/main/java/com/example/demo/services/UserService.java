@@ -35,11 +35,13 @@ public class UserService {
 			
 			user.setName(userDTO.getName());
 			user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+			user.setCpf(userDTO.getCpf());
 			user.setEmail(userDTO.getEmail());
-			user.setPhone(userDTO.getPhone());
-			
+			user.setPhone(userDTO.getPhone());	
 			
 			return userRepository.save(user);
 	}
+	
+	
 
 }

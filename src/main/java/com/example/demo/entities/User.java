@@ -1,6 +1,12 @@
 package com.example.demo.entities;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,7 +20,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements UserDetails {
 	
 	@Id //anotações para id e geração automatica
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -93,5 +99,39 @@ public class User {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+	
+	// metodos da classe user details
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // definindo perfil de acesso (todos user (por enquanto))
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+
+    @Override
+    public String getUsername() {
+        return this.email; 
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true; 
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true; 
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true; 
+    }
 		
 }

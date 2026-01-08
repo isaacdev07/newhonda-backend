@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dtos.VehicleDTO;
@@ -30,8 +31,8 @@ public class VehicleController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Vehicle>> getAllVehicles(){
-		List<Vehicle> vehicles = vehicleService.getAllVehicles();
+	public ResponseEntity<List<Vehicle>> getAllVehicles(@RequestParam(required = false) String typeVehicle){
+		List<Vehicle> vehicles = vehicleService.getAllVehicles(typeVehicle);
 		return ResponseEntity.ok(vehicles);
 	}
 }

@@ -2,7 +2,11 @@ package com.example.demo.dtos;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.example.demo.enums.UserRole;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,6 +20,9 @@ public class UserDTO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Enumerated(EnumType.STRING)
+	private UserRole role = UserRole.USER;
 	
 	@NotNull(message = "O CPF é obrigatório")
     @CPF(message = "CPF inválido") 
@@ -35,13 +42,14 @@ public class UserDTO {
 		
 	}
 	
-	public UserDTO(Long id, String name, String email, String password, String phone, String cpf) {
+	public UserDTO(Long id, String name, String email, String password, String phone, String cpf, UserRole role) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.phone = phone;
 		this.cpf = cpf;
+		this.role = role;
 	}
 
 	public Long getId() {

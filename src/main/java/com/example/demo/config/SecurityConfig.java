@@ -30,6 +30,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/user/create", "/user/login").permitAll()
                         //get nos veiculos somente autenticado
                         .requestMatchers(HttpMethod.GET, "/vehicle").authenticated()
+                        //somente role admin pode criar veiculos
+                        .requestMatchers(HttpMethod.POST, "/vehicle/create").hasRole("ADMIN")
                         
                         .anyRequest().authenticated() 
                 )

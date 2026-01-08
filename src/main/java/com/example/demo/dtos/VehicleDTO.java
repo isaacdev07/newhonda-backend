@@ -3,6 +3,8 @@ package com.example.demo.dtos;
 import com.example.demo.enums.StateVehicle;
 import com.example.demo.enums.TypeVehicle;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,7 +19,9 @@ public class VehicleDTO {
 	private String nameVehicle;
 	private int year;
 	private String kmsDriven;
+	@Enumerated(EnumType.STRING)
 	private TypeVehicle typeVehicle;
+	@Enumerated(EnumType.STRING)
 	private StateVehicle stateVehicle;
 	private String vehicleImage;
 	

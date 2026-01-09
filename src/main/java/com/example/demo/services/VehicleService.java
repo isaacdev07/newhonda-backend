@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dtos.VehicleDTO;
 import com.example.demo.entities.Vehicle;
+import com.example.demo.enums.StateVehicle;
 import com.example.demo.enums.TypeVehicle;
 import com.example.demo.repositories.VehicleRepository;
 
@@ -33,8 +34,30 @@ public class VehicleService {
 		
 	}
 	
-	public List<Vehicle> getAllVehicles(String typeVehicle){
+	public List<Vehicle> getAllVehicles(String typeVehicle, String stateVehicle){
 		
+		//checa o estado e o tipo
+		if(typeVehicle != null && !typeVehicle.isEmpty() && stateVehicle != null && !stateVehicle.isEmpty()) {
+			
+			try {
+				
+			
+			//mesma logica do tipo e estado
+			TypeVehicle tipoConvertido = TypeVehicle.valueOf(typeVehicle.toUpperCase());
+			StateVehicle stateEnum = StateVehicle.valueOf(stateVehicle.toUpperCase());
+			//retorna os veiculos correspondentes
+			return vehicleRepository.findByTypeVehicleAndStateVehicle(tipoConvertido, stateEnum);
+			
+			//caso nao chegue um enum correto retorna lista vazia
+			}catch(IllegalArgumentException e) {
+				return Collections.emptyList();
+			}
+			
+		}
+		
+		
+		
+		//checa somente o tipo
 		if(typeVehicle != null && !typeVehicle.isEmpty()) {
 			
 			try {
@@ -46,7 +69,19 @@ public class VehicleService {
 			} catch (IllegalArgumentException e) {
 				return Collections.emptyList();
 			}
+				
+		}
+		//checa somente o estado
+		if(stateVehicle != null && !stateVehicle.isEmpty()) {
 			
+			try {
+				//aqui a lógica é igual ao de cima (typeVehicle)
+				StateVehicle stateEnum = StateVehicle.valueOf(stateVehicle.toUpperCase());
+				return vehicleRepository.findByStateVehicle(stateEnum);
+				//mesma coisa, se nao chegar o enum correto retorna uma lista vazia
+			} catch (IllegalArgumentException e) {
+				return Collections.emptyList();
+			}
 		}
 		//caso contrario retorna tudo
 		return vehicleRepository.findAll();

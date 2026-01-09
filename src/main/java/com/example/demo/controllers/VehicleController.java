@@ -31,8 +31,8 @@ public class VehicleController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Vehicle>> getAllVehicles(@RequestParam(required = false) String typeVehicle){
-		List<Vehicle> vehicles = vehicleService.getAllVehicles(typeVehicle);
+	public ResponseEntity<List<Vehicle>> getAllVehicles(@RequestParam(required = false) String typeVehicle, @RequestParam(required = false) String stateVehicle){
+		List<Vehicle> vehicles = vehicleService.getAllVehicles(typeVehicle, stateVehicle);
 		return ResponseEntity.ok(vehicles);
 	}
 }

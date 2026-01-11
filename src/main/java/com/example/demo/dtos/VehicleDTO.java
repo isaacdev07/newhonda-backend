@@ -8,6 +8,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class VehicleDTO {
 	
@@ -16,11 +19,17 @@ public class VehicleDTO {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank(message = "O nome do veículo é obrigatório")
 	private String nameVehicle;
+	@NotNull(message = "O ano é obrigatório")
+    @Min(value = 1886, message = "O ano deve ser superior a 1886")//ano do primeiro carro
 	private int year;
+	@NotBlank(message = "A quilometragem é obrigatória")
 	private String kmsDriven;
+	@NotNull(message = "O tipo do veículo é obrigatório")
 	@Enumerated(EnumType.STRING)
 	private TypeVehicle typeVehicle;
+	@NotNull(message = "O estado do veículo é obrigatório")
 	@Enumerated(EnumType.STRING)
 	private StateVehicle stateVehicle;
 	private String vehicleImage;

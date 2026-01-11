@@ -10,6 +10,7 @@ import com.example.demo.dtos.VehicleDTO;
 import com.example.demo.entities.Vehicle;
 import com.example.demo.enums.StateVehicle;
 import com.example.demo.enums.TypeVehicle;
+import com.example.demo.exceptions.BusinessException;
 import com.example.demo.repositories.VehicleRepository;
 
 @Service
@@ -48,9 +49,9 @@ public class VehicleService {
 			//retorna os veiculos correspondentes
 			return vehicleRepository.findByTypeVehicleAndStateVehicle(tipoConvertido, stateEnum);
 			
-			//caso nao chegue um enum correto retorna lista vazia
+			//caso nao chegue um enum correto ele acusa o erro
 			}catch(IllegalArgumentException e) {
-				return Collections.emptyList();
+				throw  new BusinessException("Parametros inválidos, verifique se o typeVehicle (CAR/MOTO) e/ou stateVehicle (NEW, USED) estão corretos!");
 			}
 			
 		}
@@ -65,9 +66,9 @@ public class VehicleService {
 				TypeVehicle tipoConvertido = TypeVehicle.valueOf(typeVehicle.toUpperCase());
 				//chama o enum correto para o banco
 				return vehicleRepository.findByTypeVehicle(tipoConvertido);
-				//se chega um valor nao existente retorna uma lista vazia
+				//se chega um valor errado ele acusa o erro e ajuda o usuario
 			} catch (IllegalArgumentException e) {
-				return Collections.emptyList();
+				throw  new BusinessException("Tipo de veículo inválido! Verifique se está correto. (CAR, MOTO)");
 			}
 				
 		}
@@ -80,7 +81,7 @@ public class VehicleService {
 				return vehicleRepository.findByStateVehicle(stateEnum);
 				//mesma coisa, se nao chegar o enum correto retorna uma lista vazia
 			} catch (IllegalArgumentException e) {
-				return Collections.emptyList();
+				throw  new BusinessException("Estado de veículo inválido! Verifique se está correto. (NEW, USED)");
 			}
 		}
 		//caso contrario retorna tudo

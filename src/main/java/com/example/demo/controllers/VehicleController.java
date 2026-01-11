@@ -16,6 +16,8 @@ import com.example.demo.dtos.VehicleDTO;
 import com.example.demo.entities.Vehicle;
 import com.example.demo.services.VehicleService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("vehicle")
 public class VehicleController {
@@ -24,7 +26,7 @@ public class VehicleController {
 	private VehicleService vehicleService;
 	
 	@PostMapping("/create")
-	public ResponseEntity<Vehicle> createNewUser(@RequestBody VehicleDTO vehicleDTO){
+	public ResponseEntity<Vehicle> createNewUser(@Valid @RequestBody VehicleDTO vehicleDTO){
 		Vehicle newVehicle = vehicleService.createNewVehicle(vehicleDTO);	
 		return ResponseEntity.status(HttpStatus.CREATED).body(newVehicle);
 		

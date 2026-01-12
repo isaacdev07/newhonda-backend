@@ -1,8 +1,9 @@
 package com.example.demo.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,8 +34,10 @@ public class VehicleController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Vehicle>> getAllVehicles(@RequestParam(required = false) String typeVehicle, @RequestParam(required = false) String stateVehicle){
-		List<Vehicle> vehicles = vehicleService.getAllVehicles(typeVehicle, stateVehicle);
+	public ResponseEntity<Page<Vehicle>> getAllVehicles(@RequestParam(required = false) String typeVehicle,
+														@RequestParam(required = false) String stateVehicle,
+														@PageableDefault(size = 10, sort = "nameVehicle") Pageable pageable){
+		Page<Vehicle> vehicles = vehicleService.getAllVehicles(typeVehicle, stateVehicle, pageable);
 		return ResponseEntity.ok(vehicles);
 	}
 }

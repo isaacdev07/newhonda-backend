@@ -1,9 +1,8 @@
 package com.example.demo.services;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dtos.VehicleDTO;
@@ -35,19 +34,17 @@ public class VehicleService {
 		
 	}
 	
-	public List<Vehicle> getAllVehicles(String typeVehicle, String stateVehicle){
+	public Page<Vehicle> getAllVehicles(String typeVehicle, String stateVehicle, Pageable pageable){
 		
 		//checa o estado e o tipo
 		if(typeVehicle != null && !typeVehicle.isEmpty() && stateVehicle != null && !stateVehicle.isEmpty()) {
 			
 			try {
-				
-			
 			//mesma logica do tipo e estado
 			TypeVehicle tipoConvertido = TypeVehicle.valueOf(typeVehicle.toUpperCase());
 			StateVehicle stateEnum = StateVehicle.valueOf(stateVehicle.toUpperCase());
 			//retorna os veiculos correspondentes
-			return vehicleRepository.findByTypeVehicleAndStateVehicle(tipoConvertido, stateEnum);
+			return vehicleRepository.findByTypeVehicleAndStateVehicle(tipoConvertido, stateEnum, pageable);
 			
 			//caso nao chegue um enum correto ele acusa o erro
 			}catch(IllegalArgumentException e) {
@@ -65,7 +62,7 @@ public class VehicleService {
 				//trasforma o string no enum para o banco poder ler
 				TypeVehicle tipoConvertido = TypeVehicle.valueOf(typeVehicle.toUpperCase());
 				//chama o enum correto para o banco
-				return vehicleRepository.findByTypeVehicle(tipoConvertido);
+				return vehicleRepository.findByTypeVehicle(tipoConvertido, pageable);
 				//se chega um valor errado ele acusa o erro e ajuda o usuario
 			} catch (IllegalArgumentException e) {
 				throw  new BusinessException("Tipo de veículo inválido! Verifique se está correto. (CAR, MOTO)");
@@ -78,14 +75,14 @@ public class VehicleService {
 			try {
 				//aqui a lógica é igual ao de cima (typeVehicle)
 				StateVehicle stateEnum = StateVehicle.valueOf(stateVehicle.toUpperCase());
-				return vehicleRepository.findByStateVehicle(stateEnum);
+				return vehicleRepository.findByStateVehicle(stateEnum, pageable);
 				//mesma coisa, se nao chegar o enum correto retorna uma lista vazia
 			} catch (IllegalArgumentException e) {
 				throw  new BusinessException("Estado de veículo inválido! Verifique se está correto. (NEW, USED)");
 			}
 		}
 		//caso contrario retorna tudo
-		return vehicleRepository.findAll();
+		return vehicleRepository.findAll(pageable);
 	}
 	
 	

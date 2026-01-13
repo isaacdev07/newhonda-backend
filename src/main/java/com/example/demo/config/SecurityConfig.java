@@ -32,9 +32,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/vehicle").authenticated()
                         //swagger liberado para todos
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                        //somente role admin pode criar veiculos
+                        //somente role admin pode criar veiculos, editar veiculos e deletar veiculos
                         .requestMatchers(HttpMethod.POST, "/vehicle/create").hasRole("ADMIN")
-                        
+                        .requestMatchers(HttpMethod.PUT, "/vehicle/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/vehicle/{id}").hasRole("ADMIN")
                         .anyRequest().authenticated() 
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

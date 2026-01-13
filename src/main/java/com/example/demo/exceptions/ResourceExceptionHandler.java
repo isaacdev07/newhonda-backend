@@ -45,5 +45,16 @@ public class ResourceExceptionHandler {
         //retorna o json preenchido com os erros
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
     }
-	
+	//tratando o erro 404
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<StandardError> entityNotFound(ResourceNotFoundException e, HttpServletRequest request) {
+        StandardError err = new StandardError();
+        err.setTimestamp(Instant.now());
+        err.setStatus(HttpStatus.NOT_FOUND.value());
+        err.setError("Resource not found");
+        err.setMessage(e.getMessage());
+        err.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+    }
 }

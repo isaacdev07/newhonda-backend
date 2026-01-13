@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
+import com.example.demo.exceptions.ResourceNotFoundException;
 import com.example.demo.dtos.VehicleDTO;
 import com.example.demo.entities.Vehicle;
 import com.example.demo.enums.StateVehicle;
@@ -52,9 +52,7 @@ public class VehicleService {
 			}
 			
 		}
-		
-		
-		
+
 		//checa somente o tipo
 		if(typeVehicle != null && !typeVehicle.isEmpty()) {
 			
@@ -85,5 +83,37 @@ public class VehicleService {
 		return vehicleRepository.findAll(pageable);
 	}
 	
+	//atualizar veiculo
+	public Vehicle updateVehicle(Long id, Vehicle vehicleData) {
+		//verifica se o veiculo existe
+        Vehicle existingVehicle = vehicleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Veículo não encontrado com ID: " + id));
+        
+        //atualiza o veiculo
+		updateData(existingVehicle, vehicleData);
+		
+		//salva o veiculo atualizado
+		return vehicleRepository.save(existingVehicle);
+		
+	}
+	
+	//deletar veiculo
+	public void deleteVehicle(Long id) {
+		//verifica se o veiculo existe pelo id
+		if(!vehicleRepository.existsById(id)) {
+			throw new ResourceNotFoundException("Veículo não encontrado para deletar com ID: " + id);	
+		}
+		vehicleRepository.deleteById(id);
+	}
+	
+	//metodo auxiliar para nao perder o veiculo (id)
+	private void updateData(Vehicle existing, Vehicle newData) {
+        existing.setNameVehicle(newData.getNameVehicle());
+        existing.setYear(newData.getYear());
+        existing.setKmsDriven(newData.getKmsDriven());
+        existing.setTypeVehicle(newData.getTypeVehicle());
+        existing.setStateVehicle(newData.getStateVehicle());
+        existing.setVehicleImage(newData.getVehicleImage());
+    }
 	
 }

@@ -18,4 +18,7 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 
 	//combinar os filtros para buscar dois tipos ao mesmo tempo
 	Page<Vehicle> findByTypeVehicleAndStateVehicle(TypeVehicle typeVehicle,StateVehicle stateVehicle, Pageable pageable);
+	
+	//connta quantos veiculos tem com aquele tipo especifico
+	long countByTypeVehicle(TypeVehicle typeVehicle);
 }

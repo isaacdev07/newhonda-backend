@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.example.demo.exceptions.ResourceNotFoundException;
+
 import com.example.demo.dtos.VehicleDTO;
+import com.example.demo.dtos.VehicleStatsDTO;
 import com.example.demo.entities.Vehicle;
 import com.example.demo.enums.StateVehicle;
 import com.example.demo.enums.TypeVehicle;
 import com.example.demo.exceptions.BusinessException;
+import com.example.demo.exceptions.ResourceNotFoundException;
 import com.example.demo.repositories.VehicleRepository;
 
 @Service
@@ -115,5 +117,21 @@ public class VehicleService {
         existing.setStateVehicle(newData.getStateVehicle());
         existing.setVehicleImage(newData.getVehicleImage());
     }
+	
+	//metodo para retornar status dos veiculos
+	public VehicleStatsDTO getVehicleStatistics() {
+		
+		//busca o total de veiculos
+		long total = vehicleRepository.count();
+		
+		//busca o total de carros
+		long cars = vehicleRepository.countByTypeVehicle(TypeVehicle.CAR);
+		
+		//busca o total de motos
+		long motos = vehicleRepository.countByTypeVehicle(TypeVehicle.MOTO);
+		
+		return new VehicleStatsDTO(total, cars, motos);
+	}
+	
 	
 }

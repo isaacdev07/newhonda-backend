@@ -1,16 +1,30 @@
 package com.example.demo.dtos;
 
+import java.math.BigDecimal;
+
 public class VehicleStatsDTO {
 	
 	private long totalVehicles;
 	private long totalCars;
 	private long totalMotos;
+	private BigDecimal totalRevenue;
 	
 	
-	public VehicleStatsDTO(long totalVehicles, long totalCars, long totalMotos) {
+	public VehicleStatsDTO(long totalVehicles, long totalCars, long totalMotos, BigDecimal totalRevenue) {
 		this.totalVehicles = totalVehicles;
 		this.totalCars = totalCars;
 		this.totalMotos = totalMotos;
+		this.totalRevenue = totalRevenue;
+	}
+
+
+	public BigDecimal getTotalRevenue() {
+		return totalRevenue;
+	}
+
+
+	public void setTotalRevenue(BigDecimal totalRevenue) {
+		this.totalRevenue = totalRevenue;
 	}
 
 

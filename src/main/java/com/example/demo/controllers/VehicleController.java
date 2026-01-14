@@ -69,4 +69,11 @@ public class VehicleController {
 		return ResponseEntity.ok(stats);
 	}
 	
+	//post de vender veiculos
+	@PostMapping("/{id}/sold")
+	public ResponseEntity<Vehicle> markAsSold(@PathVariable Long id){
+		Vehicle soldVehicle = vehicleService.shellVehicle(id);
+		return ResponseEntity.ok(soldVehicle);
+	}
+	
 }

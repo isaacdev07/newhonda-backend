@@ -1,5 +1,8 @@
 package com.example.demo.dtos;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import com.example.demo.enums.StateVehicle;
 import com.example.demo.enums.TypeVehicle;
 
@@ -32,11 +35,14 @@ public class VehicleDTO {
 	@NotNull(message = "O estado do veículo é obrigatório")
 	@Enumerated(EnumType.STRING)
 	private StateVehicle stateVehicle;
+	@NotNull(message = "o preço do veiculo é obrigatório")
+	private BigDecimal price;
+	private LocalDateTime saleDate;
 	private String vehicleImage;
 	
 	
 	public VehicleDTO(Long id, String nameVehicle, int year, String kmsDriven, String vehicleImage, TypeVehicle typeVehicle,
-			StateVehicle stateVehicle) {
+			StateVehicle stateVehicle, BigDecimal price, LocalDateTime saleDate) {
 		this.id = id;
 		this.nameVehicle = nameVehicle;
 		this.year = year;
@@ -44,6 +50,8 @@ public class VehicleDTO {
 		this.typeVehicle = typeVehicle;
 		this.stateVehicle = stateVehicle;
 		this.vehicleImage = vehicleImage;
+		this.price = price;
+		this.saleDate = saleDate;
 	}
 
 
@@ -58,6 +66,19 @@ public class VehicleDTO {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public BigDecimal getPrice() {
+		return price;
+	}
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+	
+	public LocalDateTime getSaleDate() {
+		return saleDate;
+	}
+	public void setSaleDate(LocalDateTime saleDate) {
+		this.saleDate = saleDate;
 	}
 
 

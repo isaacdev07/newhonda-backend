@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dtos.VehicleDTO;
+import com.example.demo.dtos.VehicleStatsDTO;
 import com.example.demo.entities.Vehicle;
 import com.example.demo.services.VehicleService;
 
@@ -60,4 +61,12 @@ public class VehicleController {
 		 vehicleService.deleteVehicle(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	//get statistics
+	@GetMapping("/stats")
+	public ResponseEntity<VehicleStatsDTO> getStatistics(){
+		VehicleStatsDTO stats = vehicleService.getVehicleStatistics();
+		return ResponseEntity.ok(stats);
+	}
+	
 }

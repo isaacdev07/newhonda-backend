@@ -30,6 +30,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/user/create", "/user/login").permitAll()
                         //get nos veiculos somente autenticado
                         .requestMatchers(HttpMethod.GET, "/vehicle", "/vehicle/stats").authenticated()
+                        //comprar/vender somente autenticado
+                        .requestMatchers(HttpMethod.POST, "/vehicle/{id}/sold").authenticated()
                         //swagger liberado para todos
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         //somente role admin pode criar veiculos, editar veiculos e deletar veiculos

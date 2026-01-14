@@ -1,5 +1,8 @@
 package com.example.demo.services;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +34,7 @@ public class VehicleService {
 		vehicle.setTypeVehicle(vehicleDTO.getTypeVehicle());
 		vehicle.setYear(vehicleDTO.getYear());
 		vehicle.setVehicleImage(vehicleDTO.getVehicleImage());
+		vehicle.setPrice(vehicleDTO.getPrice());
 		
 		return vehicleRepository.save(vehicle);
 		
@@ -130,8 +134,27 @@ public class VehicleService {
 		//busca o total de motos
 		long motos = vehicleRepository.countByTypeVehicle(TypeVehicle.MOTO);
 		
-		return new VehicleStatsDTO(total, cars, motos);
+		BigDecimal totalRevenue = vehicleRepository.getTotalRevenue();
+		
+		return new VehicleStatsDTO(total, cars, motos, totalRevenue);
 	}
 	
-	
+	public Vehicle shellVehicle(Long id) {
+		//procura o veiculo
+		Vehicle vehicle = vehicleRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Veículo não encontrado."));
+		
+		//verifica se ja foi vendido
+		if(StateVehicle.SOLD.equals(vehicle.getStateVehicle())) {
+			throw new BusinessException("Este veículo ja foi vendido");
+		}
+		
+		//marca como vendido e salva a data
+		vehicle.setStateVehicle(StateVehicle.SOLD);
+		vehicle.setSaleDate(LocalDateTime.now());
+		
+		
+		//salva e retorna o novo veículo
+		return vehicleRepository.save(vehicle);
+	}
 }

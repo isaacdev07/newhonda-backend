@@ -12,6 +12,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -25,6 +27,12 @@ public class Vehicle {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	//relacionamento
+	@ManyToOne  
+    @JoinColumn(name = "user_id") 
+    private User client;
+	
 	@NotBlank(message = "O nome do veículo é obrigatório")
 	private String nameVehicle;
 	@NotNull(message = "O ano é obrigatório")
@@ -56,11 +64,19 @@ public class Vehicle {
 		this.price = price;
 		this.saleDate = saleDate;
 	}
-
-
+	
 	public Vehicle() {
 	}
 
+	
+
+	public User getClient() {
+		return client;
+	}
+
+	public void setClient(User client) {
+		this.client = client;
+	}
 
 	public Long getId() {
 		return id;

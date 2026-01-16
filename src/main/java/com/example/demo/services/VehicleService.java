@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dtos.VehicleDTO;
 import com.example.demo.dtos.VehicleStatsDTO;
+import com.example.demo.entities.User;
 import com.example.demo.entities.Vehicle;
 import com.example.demo.enums.StateVehicle;
 import com.example.demo.enums.TypeVehicle;
 import com.example.demo.exceptions.BusinessException;
 import com.example.demo.exceptions.ResourceNotFoundException;
+import com.example.demo.repositories.UserRepository;
 import com.example.demo.repositories.VehicleRepository;
 
 @Service
@@ -23,6 +25,9 @@ public class VehicleService {
 	
 	@Autowired
 	private VehicleRepository vehicleRepository;
+	
+	@Autowired
+    private UserRepository userRepository;
 	
 	public Vehicle createNewVehicle(VehicleDTO vehicleDTO) {
 		
@@ -139,9 +144,9 @@ public class VehicleService {
 		return new VehicleStatsDTO(total, cars, motos, totalRevenue);
 	}
 	
-	public Vehicle shellVehicle(Long id) {
+	public Vehicle shellVehicle(Long vehicleId, Long userId) {
 		//procura o veiculo
-		Vehicle vehicle = vehicleRepository.findById(id)
+		Vehicle vehicle = vehicleRepository.findById(vehicleId)
 				.orElseThrow(() -> new ResourceNotFoundException("Veículo não encontrado."));
 		
 		//verifica se ja foi vendido
@@ -149,9 +154,13 @@ public class VehicleService {
 			throw new BusinessException("Este veículo ja foi vendido");
 		}
 		
+		User client = userRepository.findById(userId)
+	            .orElseThrow(() -> new RuntimeException("Comprador não encontrado"));
+		
 		//marca como vendido e salva a data
 		vehicle.setStateVehicle(StateVehicle.SOLD);
 		vehicle.setSaleDate(LocalDateTime.now());
+		vehicle.setClient(client);
 		
 		
 		//salva e retorna o novo veículo

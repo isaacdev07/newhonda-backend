@@ -3,6 +3,7 @@ package com.example.demo.dtos;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.example.demo.entities.Vehicle;
 import com.example.demo.enums.StateVehicle;
 import com.example.demo.enums.TypeVehicle;
 
@@ -21,6 +22,11 @@ public class VehicleDTO {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	private ClientDTO client;
+	
+	//relacionamento
+	private Long userId;
 	
 	@NotBlank(message = "O nome do veículo é obrigatório")
 	private String nameVehicle;
@@ -41,17 +47,19 @@ public class VehicleDTO {
 	private String vehicleImage;
 	
 	
-	public VehicleDTO(Long id, String nameVehicle, int year, String kmsDriven, String vehicleImage, TypeVehicle typeVehicle,
-			StateVehicle stateVehicle, BigDecimal price, LocalDateTime saleDate) {
-		this.id = id;
-		this.nameVehicle = nameVehicle;
-		this.year = year;
-		this.kmsDriven = kmsDriven;
-		this.typeVehicle = typeVehicle;
-		this.stateVehicle = stateVehicle;
-		this.vehicleImage = vehicleImage;
-		this.price = price;
-		this.saleDate = saleDate;
+	public VehicleDTO(Vehicle entity) {
+		this.id = entity.getId();
+		this.nameVehicle = entity.getNameVehicle();
+		this.year = entity.getYear();
+		this.kmsDriven = entity.getKmsDriven();
+		this.typeVehicle = entity.getTypeVehicle();
+		this.stateVehicle = entity.getStateVehicle();
+		this.vehicleImage = entity.getVehicleImage();
+		this.price = entity.getPrice();
+		this.saleDate = entity.getSaleDate();
+		if(entity.getClient() != null ) {
+			this.client = new ClientDTO(entity.getClient());
+		}
 	}
 
 
@@ -63,10 +71,32 @@ public class VehicleDTO {
 		return id;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+
+
+	public Long getUserId() {
+		return userId;
+	}
+
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+
+	public ClientDTO getClient() {
+		return client;
+	}
+
+
+	public void setClient(ClientDTO client) {
+		this.client = client;
+	}
+
+
 	public BigDecimal getPrice() {
 		return price;
 	}

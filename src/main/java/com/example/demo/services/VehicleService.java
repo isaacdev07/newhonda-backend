@@ -2,6 +2,8 @@ package com.example.demo.services;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -165,5 +167,13 @@ public class VehicleService {
 		
 		//salva e retorna o novo veículo
 		return vehicleRepository.save(vehicle);
+	}
+	
+	//listar veiculos de um usuario
+	public Page<VehicleDTO> getVehiclesByClient(Long userId, Pageable pageable) {
+		
+		Page<Vehicle> vehicles = vehicleRepository.findByClientId(userId, pageable);
+		
+		return vehicles.map(VehicleDTO::new);
 	}
 }

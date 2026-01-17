@@ -1,6 +1,7 @@
 package com.example.demo.repositories;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,4 +30,7 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 	//o coalesce serve para retornar - ao inves de null caso nao tenha nenhum
 	@Query("SELECT COALESCE(SUM(v.price), 0) FROM Vehicle v WHERE v.stateVehicle = 'SOLD'")
     BigDecimal getTotalRevenue();
+	
+	//listar veiculos de usuario especifico por id
+	Page<Vehicle> findByClientId(Long clientId, Pageable pageable);
 }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.data.domain.Sort;
 import com.example.demo.dtos.VehicleDTO;
 import com.example.demo.dtos.VehicleStatsDTO;
 import com.example.demo.entities.Vehicle;
@@ -76,6 +76,17 @@ public class VehicleController {
 		Long clientId = dto.getUserId();
 		Vehicle soldVehicle = vehicleService.shellVehicle(id, clientId);
 		return ResponseEntity.ok(new VehicleDTO(soldVehicle));
+	}
+	
+	//get my-vehicles
+	@GetMapping("/my-vehicles/{userId}")
+	public ResponseEntity<Page<VehicleDTO>> getMyVehicles(@PathVariable Long userId,
+			@PageableDefault(size = 10, sort = "saleDate", direction = Sort.Direction.DESC) Pageable pageable){
+		
+		Page<VehicleDTO> myGarage = vehicleService.getVehiclesByClient(userId, pageable);
+		
+		return ResponseEntity.ok(myGarage);
+		
 	}
 	
 }

@@ -33,4 +33,7 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 	
 	//listar veiculos de usuario especifico por id
 	Page<Vehicle> findByClientId(Long clientId, Pageable pageable);
+	
+	//listar somente carros disponiveis para venda
+	Page<Vehicle> findByStateVehicleNot(StateVehicle state, Pageable pagebale);
 }

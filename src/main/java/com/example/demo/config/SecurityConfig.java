@@ -29,7 +29,7 @@ public class SecurityConfig {
                         //post de cadastro e logins publicos
                         .requestMatchers(HttpMethod.POST, "/user/create", "/user/login").permitAll()
                         //get nos veiculos somente autenticado
-                        .requestMatchers(HttpMethod.GET, "/vehicle", "/vehicle/stats").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/vehicle", "/vehicle/stats", "/vehicle/available").authenticated()
                         //comprar/vender somente autenticado
                         .requestMatchers(HttpMethod.POST, "/vehicle/{id}/sold").authenticated()
                         //swagger liberado para todos

@@ -176,4 +176,14 @@ public class VehicleService {
 		
 		return vehicles.map(VehicleDTO::new);
 	}
+	
+	//listar somente veiculos disponiveis
+	public Page<VehicleDTO> findAllAvailableVehicles(Pageable pageable) {
+		
+		Page<Vehicle> avaliable = vehicleRepository.findByStateVehicleNot(StateVehicle.SOLD, pageable);
+		
+		return avaliable.map(VehicleDTO::new);
+		
+	}
 }
+

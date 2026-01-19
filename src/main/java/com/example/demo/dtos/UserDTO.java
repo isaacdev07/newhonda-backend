@@ -37,6 +37,9 @@ public class UserDTO {
 	private String password;
 	private String phone;
 	
+	@Column(length = 2000)
+    private String currentToken;
+	
 	
 	public UserDTO() {
 		
@@ -98,6 +101,14 @@ public class UserDTO {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+
+	public String getCurrentToken() {
+		return currentToken;
+	}
+
+	public void setCurrentToken(String currentToken) {
+		this.currentToken = currentToken;
 	}
 		
 }

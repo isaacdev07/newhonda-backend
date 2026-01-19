@@ -43,6 +43,10 @@ public class User implements UserDetails {
     @Email(message = "Formato de e-mail inválido")
 	private String email;
 	
+	//apenas para deixar valido somente o ultimo token gerado
+	@Column(length = 2000) 
+    private String currentToken;
+	
 	private String name;
 	private String password;
 	private String phone;
@@ -83,6 +87,15 @@ public class User implements UserDetails {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+
+	public String getCurrentToken() {
+		return currentToken;
+	}
+
+	public void setCurrentToken(String currentToken) {
+		this.currentToken = currentToken;
 	}
 
 	public String getPassword() {

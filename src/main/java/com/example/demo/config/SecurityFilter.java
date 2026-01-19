@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.example.demo.entities.User;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.TokenService;
 
@@ -36,12 +37,18 @@ public class SecurityFilter extends OncePerRequestFilter {
 
 
             if(login != null && !login.isEmpty()){
-                UserDetails user = userRepository.findByEmail(login);
+                UserDetails userDetails = userRepository.findByEmail(login);
+                
+                User user = (User) userDetails;
+                
+                if(user != null && token.equals(user.getCurrentToken())) {
+                	
 
                 var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 
-                // se tudo der certo usuario logado
+                // só autentica se passar no if acima
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
             }
         }
         

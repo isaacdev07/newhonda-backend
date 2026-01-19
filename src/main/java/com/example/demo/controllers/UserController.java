@@ -1,4 +1,4 @@
-package com.example.demo.controllers;
+	package com.example.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,6 +52,12 @@ public class UserController {
 		//verifica se a senha e/ou email estao corretos
 		if(user != null && passwordEncoder.matches(data.password(), user.getPassword())) {
 			String token = tokenService.generateToken(user);
+			
+			//atualiza o token
+			user.setCurrentToken(token);
+			
+			//salva o token novo
+			this.repository.save(user);
 			
 			//tudo ok retorna o token
 			return ResponseEntity.ok(new LoginResponseDTO(token));

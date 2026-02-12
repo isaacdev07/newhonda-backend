@@ -8,7 +8,7 @@ spring.datasource.url=jdbc:mysql://localhost:3306/newhonda
 #username e senha
 spring.datasource.username=root
 spring.datasource.password=root
-# este arquivo é apenas um 
+# este arquivo é apenas um ex
 #chave token jwt
 api.security.token.secret=${JWT_SECRET}
 
